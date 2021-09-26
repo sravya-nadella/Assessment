@@ -1,0 +1,80 @@
+{
+	"info": {
+		"_postman_id": "ab901c25-7ac4-4406-b8a6-05044bee2ea9",
+		"name": "Assessment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET stars wars API",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"\r",
+							"pm.test(\"Verify that the people endpoint is returning a successful response 200\", function()\r",
+							"{\r",
+							"pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var count = 0;\r",
+							"var people = [];\r",
+							"var peopleWithHeight200 = [];\r",
+							"_.each(jsonData.results,(result)=>{\r",
+							"    people.push(result);\r",
+							"    if(result.height>200){\r",
+							"        count= count+1;\r",
+							"        peopleWithHeight200.push(result);\r",
+							"  \r",
+							"    }\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Count of people should be 82\",()=>{\r",
+							"   pm.expect(people.length).to.be.equals(82);\r",
+							"   \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Count of people having height > 200\",()=>{\r",
+							"   pm.expect(count).to.be.equals(1);\r",
+							"});\r",
+							"_.each(peopleWithHeight200,(data)=>{\r",
+							"    console.log(data.name);\r",
+							"})\r",
+							"//Currently there is only one person with height >200\r",
+							"pm.test(\"Name should be Darth Vader\",()=>{\r",
+							"   pm.expect(peopleWithHeight200[0].name).to.be.equals(\"Darth Vader\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://swapi.dev/api/people",
+					"protocol": "https",
+					"host": [
+						"swapi",
+						"dev"
+					],
+					"path": [
+						"api",
+						"people"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
